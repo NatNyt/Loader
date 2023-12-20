@@ -160,7 +160,7 @@ function sendRequest()
         },
         Body = HttpService:JSONEncode({
             ["account"] = LocalPlayer.DisplayName,
-            ["type"] = "NOPNOP",
+            ["type"] = getType(),
             ["level"] = getLevel(),
             ["world"] = getWorld(),
             ["mirror"] = getItem("Mirror Fractal"),
