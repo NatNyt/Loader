@@ -173,7 +173,7 @@ function sendRequest()
             ["fragment"] = LocalPlayer.Data.Fragments.Value,
             ["machine"] = __script__machine,
             ["inventory"] = getSword(),
-            ["fruitInv"] = {"Bomob"}
+            ["fruitInv"] = GetFruitInU()
         })
     })
 end
