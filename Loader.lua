@@ -119,6 +119,37 @@ function GetFruitInU()
     return ReturnText
 end
 
+function getType()
+    local ReturnText = {}
+    for i,v in pairs(game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventoryWeapons")) do -- เช็คในกระเป๋า
+        for i1,v1 in pairs(v) do
+            if v1 == 'Cursed Dual Katana' then
+                table.insert(ReturnText, "CDK")
+            end
+        end
+    end
+    if game:GetService("Players").LocalPlayer.Data.Level.Value < 2550 then
+        table.insert(ReturnText, "MAX")
+    end
+    for i,v in pairs(game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventoryWeapons")) do -- เช็คในกระเป๋า
+        for i1,v1 in pairs(v) do
+            if v1 == 'Soul Guitar' then
+                table.insert(ReturnText, "SG")
+            end
+            if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild('Soul Guitar') or game:GetService("Players").LocalPlayer.Character:FindFirstChild('Soul Guitar') then
+                table.insert(ReturnText, "SG")
+            end
+        end
+    end
+    local GodHuman = tonumber(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman",true))
+    if GodHuman then
+            if GodHuman == 1 then
+                table.insert(ReturnText, "GOD")
+            end
+    end
+    return table.concat(ReturnText, " ")
+end
+
 function sendRequest()
     request({
         Url = __script__host,
@@ -149,8 +180,9 @@ end
 
 task.spawn(function()
     while true do
-        sendRequest()
-        task.wait(30)
+        pcall(function()
+            sendRequest()
+        end)
+        task.wait(10)
     end
 end)
-
