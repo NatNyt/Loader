@@ -150,6 +150,20 @@ function getType()
     return table.concat(ReturnText, " ")
 end
 
+function getVK()
+	for i,v in pairs(game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventoryWeapons")) do -- เช็คในกระเป๋า
+            for i1,v1 in pairs(v) do
+                if v1 == 'Valkyrie Helm' then
+                    return true
+                end
+            end
+        end
+     if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild('Valkyrie Helm') or game:GetService("Players").LocalPlayer.Character:FindFirstChild('Valkyrie Helm') then
+           return true
+        end
+    return false
+end
+
 function sendRequest()
     request({
         Url = __script__host,
@@ -164,7 +178,7 @@ function sendRequest()
             ["level"] = getLevel(),
             ["world"] = getWorld(),
             ["mirror"] = getItem("Mirror Fractal"),
-            ["valk"] = getItem("Valkyrie Helm"),
+            ["valk"] = getVK(),
             ["fruitMas"] = getFruitMastery(),
             ["fruit"] = getFruitName(),
             ["awaken"] = getAwakend(),
