@@ -180,7 +180,7 @@ function sendRequest()
             ["mirror"] = getItem("Mirror Fractal"),
             ["valk"] = getVK(),
             ["fruitMas"] = getFruitMastery(),
-            ["fruit"] = getFruitName(),
+            ["fruit"] = getFruitName() or "None",
             ["awaken"] = getAwakend(),
             ["melee"] = getMeele(),
             ["beli"] = LocalPlayer.Data.Beli.Value,
