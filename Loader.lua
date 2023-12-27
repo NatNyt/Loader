@@ -97,7 +97,7 @@ function getSword()
     RequestGetInvertory = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")
     for i , v in pairs(RequestGetInvertory) do 
         if v['Type'] == "Sword" then 
-            if v['Rarity'] >= 5 then
+            if v['Rarity'] >= 4 then
                 table.insert(SwordList, v['Name'])
             end
         end
@@ -118,26 +118,39 @@ function GetFruitInU()
     end
     return ReturnText
 end
-
-function getType()
-    local ReturnText = {}
-    for i,v in pairs(game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventoryWeapons")) do -- เช็คในกระเป๋า
-        for i1,v1 in pairs(v) do
-            if v1 == 'Cursed Dual Katana' then
-                table.insert(ReturnText, "CDK")
-            end
+function len(x)
+    local q = 0
+    for i, v in pairs(x) do
+        q = q + 1
+    end
+    return q
+end
+function findItem(item) 
+    RequestgetInventory = game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventory")
+    for i, __ in pairs(RequestgetInventory) do
+        if __["Name"] == item then
+            return true
         end
     end
-    if game:GetService("Players").LocalPlayer.Data.Level.Value < 2550 then
+    return false
+end
+function getType()
+    local ReturnText = {}
+    if findItem("Cursed Dual Katana") then 
+        table.insert(ReturnText, "CDK")
+    end
+    if game:GetService("Players").LocalPlayer.Data.Level.Value >= 2550 then
         table.insert(ReturnText, "MAX")
     end
     for i,v in pairs(game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventoryWeapons")) do -- เช็คในกระเป๋า
         for i1,v1 in pairs(v) do
-            if v1 == 'Soul Guitar' then
+            if not table.find(ReturnText, "SG") then
                 table.insert(ReturnText, "SG")
             end
             if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild('Soul Guitar') or game:GetService("Players").LocalPlayer.Character:FindFirstChild('Soul Guitar') then
-                table.insert(ReturnText, "SG")
+                if not table.find(ReturnText, "SG") then
+                    table.insert(ReturnText, "SG")
+                end
             end
         end
     end
@@ -146,6 +159,9 @@ function getType()
             if GodHuman == 1 then
                 table.insert(ReturnText, "GOD")
             end
+    end
+    if len(ReturnText) == 0 then
+        table.insert(ReturnText, "NOOB")
     end
     return table.concat(ReturnText, " ")
 end
