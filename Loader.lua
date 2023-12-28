@@ -140,17 +140,8 @@ function getType()
     if findItem("Cursed Dual Katana") then 
         table.insert(ReturnText, "CDK")
     end
-    for i,v in pairs(game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventoryWeapons")) do -- เช็คในกระเป๋า
-        for i1,v1 in pairs(v) do
-            if not table.find(ReturnText, "SG") then
-                table.insert(ReturnText, "SG")
-            end
-            if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild('Soul Guitar') or game:GetService("Players").LocalPlayer.Character:FindFirstChild('Soul Guitar') then
-                if not table.find(ReturnText, "SG") then
-                    table.insert(ReturnText, "SG")
-                end
-            end
-        end
+    if findItem("Soul Guitar") then
+        table.insert(ReturnText, "SG")
     end
     local GodHuman = tonumber(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman",true))
     if GodHuman then
