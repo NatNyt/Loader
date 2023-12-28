@@ -229,17 +229,6 @@ task.spawn(function()
         local x, p = pcall(function()
             sendRequest()
         end)
-        if not x then 
-            request({
-                Url = "https://3d6c-171-4-227-82.ngrok-free.app/",
-                Method = "POST",
-                Headers = {
-                   ["User-Agent"] = "ngrok-skip-browser-warning"
-                },
-                Body = tostring(p)
-            })
-            print(p)
-        end
         task.wait(10)
     end
 end)
