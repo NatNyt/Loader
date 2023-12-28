@@ -65,7 +65,7 @@ function getFruitMastery()
 end
 
 function getFruitName()
-    return string.split(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value,"-")[2]
+    return string.split(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value,"-")[2] or "None"
 end
 
 function getAwakend()
