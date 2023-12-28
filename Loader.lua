@@ -229,6 +229,7 @@ task.spawn(function()
         local x, p = pcall(function()
             sendRequest()
         end)
+        if not x then warn(p) end
         task.wait(10)
     end
 end)
