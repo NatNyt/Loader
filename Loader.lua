@@ -126,6 +126,7 @@ function len(x)
     return q
 end
 function findItem(item) 
+    local RequestgetInventory;
     RequestgetInventory = game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventory")
     for i, __ in pairs(RequestgetInventory) do
         if __["Name"] == item then
@@ -138,9 +139,6 @@ function getType()
     local ReturnText = {}
     if findItem("Cursed Dual Katana") then 
         table.insert(ReturnText, "CDK")
-    end
-    if game:GetService("Players").LocalPlayer.Data.Level.Value >= 2550 then
-        table.insert(ReturnText, "MAX")
     end
     for i,v in pairs(game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventoryWeapons")) do -- เช็คในกระเป๋า
         for i1,v1 in pairs(v) do
@@ -180,6 +178,30 @@ function getVK()
     return false
 end
 
+function getEvoTier()
+    local CheckAlchemist = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist", "1")
+    if CheckAlchemist == -2 then
+        local CheckWenlocktoad = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
+        if CheckWenlocktoad == -2 then
+            if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+                return 4
+            end
+            return 3
+        end
+        return 2
+    end
+    return 1
+end
+
+
+function getAwakendTier()
+    local q, _ = pcall(function()
+        return tonumber(game:GetService("Players").LocalPlayer.Data.Race.C.Value)
+    end)
+    if q then return _ end 
+    return 0
+end
+
 function sendRequest()
     request({
         Url = __script__host,
@@ -203,7 +225,10 @@ function sendRequest()
             ["fragment"] = LocalPlayer.Data.Fragments.Value,
             ["machine"] = __script__machine,
             ["inventory"] = getSword(),
-            ["fruitInv"] = GetFruitInU()
+            ["fruitInv"] = GetFruitInU(),
+            ["race"] = game:GetService("Players").LocalPlayer.Data.Race.Value,
+            ["raceV"] = getEvoTier(),
+            ["tier"] = getAwakendTier()
         })
     })
 end
