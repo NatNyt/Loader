@@ -21,6 +21,7 @@ function getLevel()
     return LocalPlayer.Data.Level.Value
 end
 function getWorld() 
+	local placeId = game.PlaceId
 	if placeId == 2753915549 then
 		return 1
 	elseif placeId == 4442272183 then
