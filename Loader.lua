@@ -21,13 +21,13 @@ function getLevel()
     return LocalPlayer.Data.Level.Value
 end
 function getWorld() 
-    if game.ReplicatedStorage.Remotes.CommF_:InvokeServer("DressrosaQuestProgress", "Dressrosa") == 0 and game.ReplicatedStorage.Remotes.CommF_:InvokeServer("ZQuestProgress", "Zou") == 0 then
-        return 3
-    elseif game.ReplicatedStorage.Remotes.CommF_:InvokeServer("DressrosaQuestProgress", "Dressrosa") == 0 and not game.ReplicatedStorage.Remotes.CommF_:InvokeServer("ZQuestProgress", "Zou") == 0 then
-        return 2 
-    else
-        return 1
-    end
+	if placeId == 2753915549 then
+		return 1
+	elseif placeId == 4442272183 then
+		return 2
+	elseif placeId == 7449423635 then
+		return 3
+	end
 end
 function getItem(itemName) 
     for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
