@@ -15,7 +15,8 @@ local MeleeRequestList = {
     ["Sharkman Karate"] = "BuySharkmanKarate",
     ["Electric Claw"] = "BuyElectricClaw",
     ["Dragon Talon"] = "BuyDragonTalon",
-    ["Godhuman"] = "BuyGodhuman"
+    ["Godhuman"] = "BuyGodhuman",
+    ["Super human"] = "BuySuperhuman"
 }
 function getLevel()
     return LocalPlayer.Data.Level.Value
@@ -98,7 +99,7 @@ function getSword()
     RequestGetInvertory = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")
     for i , v in pairs(RequestGetInvertory) do 
         if v['Type'] == "Sword" then 
-            if v['Rarity'] >= 4 then
+            if v['Rarity'] >= 3 then
                 table.insert(SwordList, v['Name'])
             end
         end
