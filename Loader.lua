@@ -113,7 +113,12 @@ function GetFruitInU()
         if type(v) == "table" then
             if v ~= nil then
                 if v.Price >= 2300000  then
-                    table.insert(ReturnText,string.split(v.Name,"-")[2])
+                    local text = string.split(v.Name,"-")[2]
+                    if text == "Rex"
+                    	table.insert(ReturnText,"T-Rex")
+		    else
+                    	table.insert(ReturnText,string.split(v.Name,"-")[2])
+		    end
                 end
             end
         end
