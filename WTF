@@ -1,0 +1,106 @@
+repeat task.wait() until game:IsLoaded()
+repeat task.wait() until game:GetService("Players").LocalPlayer
+
+local pbag = ({...})[1]
+local __script__host = pbag[1]
+local __script__token = pbag[2]
+local __script__machine = pbag[3]
+
+World_Now = function()
+    World = {
+        [4520749081] = 1,
+        [6381829480] = 2,
+        [15759515082] = 3
+    }
+    return World[game.PlaceId] or 1
+end
+-- [[ Levels]]
+Level = function()
+    local Level = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.Main.Lvl.Text
+    return tonumber(Level)
+end
+-- [[ Sword_Main ]]
+Sword_Main = function()
+    T_Inventory = {}
+    for i,v in pairs(game:GetService("Players").LocalPlayer.Inventory:GetChildren()) do
+        table.insert(T_Inventory,v.Name)
+    end
+    Value = getgenv().CAT(T_Inventory,'\n') 
+    return Value
+end
+-- [[ Accessories_Main ]]
+Accessories_Main = function()
+    Accessories = {}
+    for i,v in pairs(game:GetService("Players").LocalPlayer.Accessories:GetChildren()) do
+        table.insert(Accessories,v.Name)
+    end
+    return Accessories
+end
+Beli = function ()
+    return game:GetService("Players").LocalPlayer.PlayerStats.beli.Value
+end
+Gems = function ()
+    return game:GetService("Players").LocalPlayer.PlayerStats.Gem.Value
+end
+Melee_ = function () -- Fix
+    Melee = game:GetService("Players").LocalPlayer.PlayerStats:FindFirstChild("FightingStyle").Value
+    if Melee == "None" then 
+        return {}
+    end
+    return {Melee}
+end
+Sword_ = function () -- Fix
+    Sword = game:GetService("Players").LocalPlayer.PlayerStats:FindFirstChild("SwordName").Value
+    if Sword == "None" then 
+        return {}
+    end
+    return {Sword}
+end
+Fruit_ = function() -- Fix
+    Fruit = game:GetService("Players").LocalPlayer.PlayerStats:FindFirstChild("DFName").Value
+    if Fruit == "None" then 
+        return "Fruit: N/A"
+    end
+    Values = Fruit
+    return 'Fruit: '..string.sub(Values,#Values / 2 + 1,#Values)
+end
+Material_ = function()
+    Material = {}
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.StarterFrame["Inventory_Frame"].ScrollingFrameMaterial:GetChildren()) do
+        if v.ClassName == "TextButton" then
+            Amount = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.StarterFrame["Inventory_Frame"].ScrollingFrameMaterial[v.Name].Amount.Text
+            table.insert(Material,v.Name..' '..Amount) 
+        end
+    end
+    return Material
+end
+local HttpService = game:GetService("HttpService")
+
+task.spawn(function()
+    while true do wait(tonumber(10))
+        pcall(function()
+            local Payload = {
+                ["account"] = game.Players.LocalPlayer.Name(),
+                ["world"] = World_Now(),
+                ["level"] = Level(),
+                ["beli"] = Beli(),
+                ["gems"] = Gems(),
+                ["fruit"] = Fruit_(),
+                ["melee"] = Melee_(),
+                ["sword"] = Sword_Main(),
+                ["accessories"] = Accessories_Main(),
+                ["materials"] = Material_(),
+                ["machine"] = __script__machine
+            }
+            request({
+                Url = __script__host,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json",
+                    ["Authorization"] = __script__token,
+                },
+                Body = HttpService:JSONEncode(Payload)
+            })
+        end)
+    end
+end)
