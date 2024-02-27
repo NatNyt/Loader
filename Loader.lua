@@ -195,6 +195,10 @@ function getAwakendTier()
     return 0
 end
 
+function checkDoor()
+    return game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor")
+end
+
 function sendRequest()
     request({
         Url = __script__host,
@@ -221,7 +225,8 @@ function sendRequest()
             ["fruitInv"] = GetFruitInU(),
             ["race"] = game:GetService("Players").LocalPlayer.Data.Race.Value,
             ["raceV"] = getEvoTier(),
-            ["tier"] = getAwakendTier()
+            ["tier"] = getAwakendTier(),
+            ["unlockDoor"] = checkDoor()
         })
     })
 end
