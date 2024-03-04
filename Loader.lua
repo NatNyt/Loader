@@ -200,7 +200,7 @@ function checkDoor()
 end
 
 function sendRequest()
-    request({
+    local res = request({
         Url = __script__host,
         Method = "POST",
         Headers = {
@@ -229,6 +229,7 @@ function sendRequest()
             ["unlockDoor"] = checkDoor()
         })
     })
+   warn(res.Body)
 end
 
 task.spawn(function()
