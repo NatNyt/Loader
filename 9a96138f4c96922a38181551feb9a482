@@ -4,7 +4,7 @@ repeat task.wait() until game:IsLoaded()
 task.spawn(function() 
     while true do 
         local r = reuqest({
-            Url = "http://127.0.0.1:4861/?username=" . game.Players.LocalPlayer.Name,
+            Url = "http://127.0.0.1:4861/?username=" .. game.Players.LocalPlayer.Name,
             Method = "GET",
         })
         
