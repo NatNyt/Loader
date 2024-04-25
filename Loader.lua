@@ -16,7 +16,8 @@ local MeleeRequestList = {
     ["Electric Claw"] = "BuyElectricClaw",
     ["Dragon Talon"] = "BuyDragonTalon",
     ["Godhuman"] = "BuyGodhuman",
-    ["Super human"] = "BuySuperhuman"
+    ["Super human"] = "BuySuperhuman",
+    ["Sanguine Art"] = "BuySanguineArt"
 }
 function getLevel()
     return LocalPlayer.Data.Level.Value
