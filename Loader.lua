@@ -143,7 +143,7 @@ function getType()
     if findItem("Cursed Dual Katana") then 
         table.insert(ReturnText, "CDK")
     end
-    if findItem("Shark Achor") then 
+    if findItem("Shark Anchor") then 
         table.insert(ReturnText, "SA")
     end
     if findItem("Soul Guitar") then
